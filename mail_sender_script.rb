@@ -22,9 +22,6 @@ def send_email(row)
     to row["email"]
     from 'Your Name <name@domain.com>'
     subject 'Time capsule!!'
-    # text_part do
-    #   body "Hello"     
-    # end
     html_part do
       content_type 'text/html; charset=UTF-8'
       body "<p>Your message from the past: #{row["message"]}</p>" +
@@ -34,7 +31,7 @@ def send_email(row)
 end
 
 
-uri = URI.parse(URI.encode(ENV['DATABASE_URL']))
+uri = URI.parse(ENV['DATABASE_URL'])
 
 conn = PG.connect(:dbname => uri.path[1..-1], 
                   :user => uri.user, 
