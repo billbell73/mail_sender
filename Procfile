@@ -1,0 +1,1 @@
+mail_sender: bundle exec ruby mail_sender_script.rb
