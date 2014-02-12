@@ -34,7 +34,7 @@ def send_email(row)
   end
 end
 
-conn = PG.connect( dbname: ENV['HEROKU_POSTGRESQL_AQUA_URL'] )
+conn = PG.connect( dbname: ENV['DATABASE_URL'] )
 res = conn.exec("SELECT * FROM timecapsules")
 res.each do |row| 
 	date_past = Date.parse(row["send_at"]) < Date.today
