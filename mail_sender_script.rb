@@ -34,7 +34,7 @@ def send_email(row)
   end
 end
 
-conn = PG.connect_start(ENV['DATABASE_URL'])
+conn = PG.connect(:dbname => 'd4q4421j3s984m', :user => 'smnnmlnxtfdeyj', :password => 'OKDPfVxyTBG9VkzzTEOiYGI-4P', :host => 'ec2-54-197-237-120.compute-1.amazonaws.com', :port => '5432')
 res = conn.exec("SELECT * FROM timecapsules")
 res.each do |row| 
 	date_past = Date.parse(row["send_at"]) < Date.today
