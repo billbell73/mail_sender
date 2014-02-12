@@ -2,7 +2,7 @@ require 'pg'
 require 'date'
 require 'net/smtp'
 require 'mail'
-
+require 'uri'
 
 
 Mail.defaults do
@@ -29,12 +29,15 @@ def send_email(row)
     end
     html_part do
       content_type 'text/html; charset=UTF-8'
-      body '<b>Byeee!</b>'
+      body "<b>Your message from the past: #{row["message"]}</b>"
     end
   end
 end
 
-conn = PG.connect(:dbname => 'd4q4421j3s984m', :user => 'smnnmlnxtfdeyj', :password => 'OKDPfVxyTBG9VkzzTEOiYGI-4P', :host => 'ec2-54-197-237-120.compute-1.amazonaws.com', :port => '5432')
+
+uri = URI.parse(URI.encode(ENV['DATABASE_URL']))
+
+conn = PG.connect(:dbname => uri.path[1..-1], :user => uri.user, :password => uri.password, :host => uri.host, :port => uri.port)
 res = conn.exec("SELECT * FROM timecapsules")
 res.each do |row| 
 	date_past = Date.parse(row["send_at"]) < Date.today
