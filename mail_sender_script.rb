@@ -1,6 +1,5 @@
 require 'pg'
 require 'date'
-require 'net/smtp'
 require 'mail'
 require 'uri'
 
@@ -23,9 +22,9 @@ def send_email(row)
     to row["email"]
     from 'Your Name <name@domain.com>'
     subject 'Time capsule!!'
-    text_part do
-      body "Hello"     
-    end
+    # text_part do
+    #   body "Hello"     
+    # end
     html_part do
       content_type 'text/html; charset=UTF-8'
       body "<p>Your message from the past: #{row["message"]}</p>" +
@@ -48,7 +47,7 @@ res = conn.exec("SELECT * FROM timecapsules
                   AND send_at <= current_date")
 
 res.each do |row| 
-    send_email(row)
+  send_email(row)
 end
 
 
