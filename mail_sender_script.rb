@@ -45,6 +45,10 @@ res = conn.exec("SELECT * FROM timecapsules
 
 res.each do |row| 
   send_email(row)
+
+  conn.exec("UPDATE timecapsules 
+             SET sent=true 
+             WHERE video_url = '#{row['video_url']}'")
 end
 
 
