@@ -43,13 +43,12 @@ conn = PG.connect(:dbname => uri.path[1..-1],
                   :host => uri.host, 
                   :port => uri.port)
 
-res = conn.exec("SELECT * FROM timecapsules")
+res = conn.exec("SELECT * FROM timecapsules 
+                  WHERE sent = false 
+                  AND send_at <= current_date")
+
 res.each do |row| 
-	date_past = Date.parse(row["send_at"]) < Date.today
-  not_sent = row["sent"] == "f"
-  if(date_past && not_sent)
     send_email(row)
-  end
 end
 
 
